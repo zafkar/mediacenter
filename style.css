@@ -1,0 +1,16 @@
+body {
+    background-color: lightblue;
+}
+
+h1 {
+    color: navy;
+    margin-left: 20px;
+}
+
+#messagebox {
+	background: lightgreen;
+	padding-left : 10px;
+	border-left-style: solid;
+	border-left-width: 5px;
+	border-left-color: green;
+}

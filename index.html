@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<title>Page de titre</title>
+	</head>
+	
+	<body>
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+			var socket = io('127.0.0.1:8080');
+			
+			socket.on('message',function(data){
+					document.getElementById('messagebox').innerHTML += data + '\n';
+			});
+			
+			socket.on('status',function(data){
+					document.getElementById('statusPane').innerHTML = data;
+			});
+			
+			var sendCommand = function(){
+				socket.emit('mplayer',document.getElementById('cmdBox').value);
+			};
+
+		</script>
+		<input id="cmdBox" type="text"><button id="sendButton" type="button" onclick="sendCommand();" >Connect</button>
+		<div id="statusPane"></div>
+		<div id="messagebox"></div>
+	</body>
+
+</html>
