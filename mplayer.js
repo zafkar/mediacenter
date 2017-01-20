@@ -7,7 +7,7 @@ var mplayer = function(FIFO){
 	
 	this.sendcommand = function(cmd){
 		
-		this._writeStream.write(this.FIFOFile, cmd + "\n")
+		this._writeStream.write(cmd + "\n",'utf-8');
 	};
 	
 	return this;
