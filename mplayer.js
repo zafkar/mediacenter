@@ -3,8 +3,11 @@ var fs = require('fs');
 var mplayer = function(FIFO){
 	this.FIFOFile = FIFO;
 	
+	this._writeStream = fs.createWriteStream(this.FIFOFile);
+	
 	this.sendcommand = function(cmd){
-		fs.appendFileSync(this.FIFOFile, cmd + "\n")
+		
+		this._writeStream.write(this.FIFOFile, cmd + "\n")
 	};
 	
 	return this;

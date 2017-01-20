@@ -11,7 +11,7 @@ var frontend = function(FIFO){
 	this._readStream.on('data',function(data){
 		//Modify here the inputed data
 		console.log('Info - new data read : ' + data);
-		onFrontChanged(data);
+		onFrontChanged(data.toString());
 	});
 	
 	return this;
