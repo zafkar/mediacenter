@@ -2,16 +2,18 @@ var fs = require('fs');
 
 var frontend = function(FIFO){
 	
+	var self = this;
+	
 	this.currentTrack = {};
 	
 	this.FIFOFile = FIFO;
 	
 	this.onFrontChanged = function(data){};
 	
-	this._readStream = fs.createReadStream(this.FIFOFile);
+	this._readStream = fs.createReadStream(self.FIFOFile);
 	
 	this.getFront = function(){
-		return JSON.stringify(this.currentTrack);
+		return JSON.stringify(self.currentTrack);
 	}
 	
 	this.changeFront = function(){
@@ -24,7 +26,7 @@ var frontend = function(FIFO){
 		var str = data.toString();
 		
 		if(str.match(/.*?Playing.*\./)){
-			this.currentTrack = {filename: /.*?Playing (.*)\./.exec(str)[1]};
+			self.currentTrack = {filename: /.*?Playing (.*)\./.exec(str)[1]};
 		}
 		
 		if(str.match(/title:/)){
@@ -32,11 +34,11 @@ var frontend = function(FIFO){
 			
 			for(l in arr){
 				var attr = arr[l].split(':');
-				this.currentTrack[attr[0]] = attr[1];
+				self.currentTrack[attr[0]] = attr[1];
 			}
 		}
 		
-		if(str.match(/Starting playback\.\.\./'){
+		if(str.match(/Starting playback\.\.\./)){
 			changeFront();
 		}
 	};
