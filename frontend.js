@@ -18,28 +18,30 @@ var frontend = function(FIFO){
 		onFrontChanged(getFront());
 	};
 	
-	this._readStream.on('data',function(data){
+	this.onStreamData = function(data){
 		//Modify here the inputed data
 		console.log('Info - new data read : ' + data);
 		var str = data.toString();
 		
-		if(str.match(/^.Playing.*\.$/)){
-			this.currentTrack = {filename: /Playing (.*)\./.exec(str)[1]};
+		if(str.match(/.*?Playing.*\./)){
+			this.currentTrack = {filename: /.*?Playing (.*)\./.exec(str)[1]};
 		}
 		
-		if(str.startsWith('title:')){
+		if(str.match(/title:/)){
 			var arr = str.split(/\r\n|\r|\n/);
 			
 			for(l in arr){
-				var attr = l.split(':');
-				currentTrack[attr[0]] = attr[1];
+				var attr = arr[l].split(':');
+				this.currentTrack[attr[0]] = attr[1];
 			}
 		}
 		
-		if(str == 'Starting playback...'){
+		if(str.match(/Starting playback\.\.\./'){
 			changeFront();
 		}
-	});
+	};
+	
+	this._readStream.on('data',onStreamData);
 	
 	return this;
 	
