@@ -19,13 +19,17 @@
 					document.getElementById('statusPane').innerHTML = data;
 			});
 			
-			var sendCommand = function(){
-				socket.emit('mplayer',document.getElementById('cmdBox').value);
+			var sendCommand = function(data){
+				socket.emit('mplayer',data);
 			};
 
 		</script>
-		<input id="cmdBox" type="text"><button id="sendButton" type="button" onclick="sendCommand();" >Send</button>
+		<input id="cmdBox" type="text"><button id="sendButton" type="button" onclick="sendCommand(document.getElementById('cmdBox').value);" >Send</button>
 		<div id="statusPane"></div>
+		<button type="button" onclick="sendCommand('pause')">Pause/Play</button>
+		<button type="button" onclick="sendCommand('pt_step 1')">Next</button>
+		<button type="button" onclick="sendCommand('pt_step -1')">Previous</button>
+		<button type="button" onclick="sendCommand('mute')">Mute</button>
 		<div id="messagebox"></div>
 	</body>
 

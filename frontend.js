@@ -13,7 +13,11 @@ var frontend = function(FIFO){
 	this._readStream = fs.createReadStream(self.FIFOFile);
 	
 	this.getFront = function(){
-		return JSON.stringify(self.currentTrack);
+		var result = '';
+		for(k in self.currentTrack){
+			result += k[0].toUpperCase() + k.substring(1) + ' : ' + self.currentTrack[k] + '<br/>';
+		}
+		return result;
 	}
 	
 	this.changeFront = function(){
