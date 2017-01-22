@@ -1,4 +1,5 @@
 #!/bin/bash
 
-mplayer -ao pulse -slave -playlist ../playlist -input file='./FIFO' >> FIFOin
+
+mplayer -ao pulse -slave -playlist ./playlist -input file='./FIFO' >> FIFOin
 

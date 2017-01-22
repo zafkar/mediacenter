@@ -3,8 +3,8 @@ var fs = require('fs');
 var url = require('url');
 
 var config = require('./config');
-var mplayer = require('./mplayer')(config.FIFOToMplayer);
-var frontend = require('./frontend')(config.FIFOFromMplayer);
+var mplayer = require('./mplayer')(config.FIFOToMplayer,config.FIFOFromMplayer);
+var frontend = require('./frontend')();
 
 var server = http.createServer(function(req,res){
 	var page = '.' + url.parse(req.url).pathname;

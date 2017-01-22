@@ -40,7 +40,7 @@ var mplayer = function(FIFO,FIFOin){
 		var str = data.toString();
 		
 		if(str.match(/^ANS_.*/)){
-			var answer = /^ÂNS_(.*?)=(.*)/.exec(str)
+			var answer = /^ANS_(.*?)=(.*)/.exec(str)
 			self.currentStatus[answer[1]] = answer[2];
 			self.onStatusChanged(self.currentStatus,answer[1]);
 		}
