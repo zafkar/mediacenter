@@ -1,53 +1,25 @@
 var fs = require('fs');
 
-var frontend = function(FIFO){
+var frontend = function(){
 	
 	var self = this;
 	
-	this.currentTrack = {};
-	
-	this.FIFOFile = FIFO;
+	this.status = {};
 	
 	this.onFrontChanged = function(data){};
 	
-	this._readStream = fs.createReadStream(self.FIFOFile);
-	
-	this.getFront = function(){
+	this.getFrontFromStatus = function(){
 		var result = '';
-		for(k in self.currentTrack){
-			result += k[0].toUpperCase() + k.substring(1) + ' : ' + self.currentTrack[k] + '<br/>';
+		for(k in self.status){
+			result += k[0].toUpperCase() + k.substring(1) + ' : ' + self.status[k] + '<br/>';
 		}
 		return result;
 	}
 	
-	this.changeFront = function(){
-		onFrontChanged(getFront());
+	this.updateStatus = function(data,key){
+		self.status = data;
+		self.onFrontChanged(self.getFrontFromStatus());
 	};
-	
-	this.onStreamData = function(data){
-		//Modify here the inputed data
-		console.log('Info - new data read : ' + data);
-		var str = data.toString();
-		
-		if(str.match(/.*?Playing.*\./)){
-			self.currentTrack = {filename: /.*?Playing (.*)\./.exec(str)[1]};
-		}
-		
-		if(str.match(/title:/)){
-			var arr = str.split(/\r\n|\r|\n/);
-			
-			for(l in arr){
-				var attr = arr[l].split(':');
-				self.currentTrack[attr[0]] = attr[1];
-			}
-		}
-		
-		if(str.match(/Starting playback\.\.\./)){
-			changeFront();
-		}
-	};
-	
-	this._readStream.on('data',onStreamData);
 	
 	return this;
 	
