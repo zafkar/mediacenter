@@ -39,6 +39,8 @@ io.on('connection',function(socket){
 	});
 });
 
+mplayer.onStatusChanged = frontend.updateStatus;
+
 frontend.onFrontChanged = function(data){
 	console.log('Info - new status : ' + data)
 	io.emit('status',data);
