@@ -39,10 +39,11 @@ var mplayer = function(FIFO,FIFOin){
 		console.log('Info - new data read : ' + data);
 		var str = data.toString();
 		
-		if(str.match(/^ANS_.*/)){
-			var answer = /^ANS_(.*?)=(.*)/.exec(str)
-			self.currentStatus[answer[1]] = answer[2];
-			self.onStatusChanged(self.currentStatus,answer[1]);
+		var answerRE = /ANS_(.*?)=(.*)/g;
+		var match = [];
+		while ((match = answerRE.exec(str)) !== null) {
+			self.currentStatus[match[1]] = match[2];
+			self.onStatusChanged(self.currentStatus,match[1]);
 		}
 		
 		if(str.match(/Starting playback\.\.\./)){

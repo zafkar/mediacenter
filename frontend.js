@@ -14,10 +14,14 @@ var frontend = function(){
 			result += k[0].toUpperCase() + k.substring(1) + ' : ' + self.status[k] + '<br/>';
 		}
 		return result;
-	}
+	};
 	
 	this.updateStatus = function(data,key){
 		self.status = data;
+		self.onFrontChanged(self.getFrontFromStatus());
+	};
+	
+	this.sendCurrentFront = function(){
 		self.onFrontChanged(self.getFrontFromStatus());
 	};
 	

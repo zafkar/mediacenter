@@ -22,14 +22,26 @@
 			var sendCommand = function(data){
 				socket.emit('mplayer',data);
 			};
+			
+			var httpGet = function (theUrl){
+				var xmlHttp = new XMLHttpRequest();
+				xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+				xmlHttp.send( null );
+				return xmlHttp.responseText;
+			};
 
 		</script>
 		<input id="cmdBox" type="text"><button id="sendButton" type="button" onclick="sendCommand(document.getElementById('cmdBox').value);" >Send</button>
 		<div id="statusPane"></div>
-		<button type="button" onclick="sendCommand('pause')">Pause/Play</button>
-		<button type="button" onclick="sendCommand('pt_step 1')">Next</button>
-		<button type="button" onclick="sendCommand('pt_step -1')">Previous</button>
-		<button type="button" onclick="sendCommand('mute')">Mute</button>
+		<select id="playlist" size=20>
+			
+		</select>
+		<div id="controlPanel">
+			<button type="button" onclick="sendCommand('pause')">Pause/Play</button>
+			<button type="button" onclick="sendCommand('pt_step 1')">Next</button>
+			<button type="button" onclick="sendCommand('pt_step -1')">Previous</button>
+			<button type="button" onclick="sendCommand('mute')">Mute</button>
+		</div>
 		<div id="messagebox"></div>
 	</body>
 

@@ -33,6 +33,8 @@ io.on('connection',function(socket){
 	console.log('Info - new user connected : ' + socket.conn.id);
 	socket.emit('message','You are currently connected.')
 	
+	frontend.sendCurrentFront();
+	
 	socket.on('mplayer',function(data){
 		console.log('Info - new command : ' + data);
 		mplayer.sendcommand(data);
@@ -42,7 +44,7 @@ io.on('connection',function(socket){
 mplayer.onStatusChanged = frontend.updateStatus;
 
 frontend.onFrontChanged = function(data){
-	console.log('Info - new status : ' + data)
+	console.log('Info - new status : ' + data);
 	io.emit('status',data);
 };
 
